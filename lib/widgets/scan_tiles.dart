@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:qr_reader/themes/app_theme.dart';
+import 'package:qr_reader/utils/utils.dart';
 
 import '../providers/scan_list_provider.dart';
+import '../themes/app_theme.dart';
 
-class HistorialMapasScreen extends StatelessWidget {
-  const HistorialMapasScreen({Key? key}) : super(key: key);
+class ScanTiles extends StatelessWidget {
+  final String tipo;
+
+  const ScanTiles({Key? key, required this.tipo}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -20,14 +23,29 @@ class HistorialMapasScreen extends StatelessWidget {
           scanListProvider.borrarScan(scanListProvider.scans[index]!.id!);
         },
         child: ListTile(
-          leading: const Icon(
-            Icons.map_outlined,
+          leading: Icon(
+            tipo == 'geo' ? Icons.map_outlined : Icons.home_outlined,
             color: AppTheme.primary,
           ),
           title: Text(scanListProvider.scans[index]!.valor),
           subtitle: Text(scanListProvider.scans[index]!.id.toString()),
           trailing: const Icon(Icons.keyboard_arrow_right),
-          onTap: () async {},
+          onTap: () async {
+            // final url = Uri.parse("https://google.com");
+
+            // if (await canLaunchUrl(
+            //   url,
+            // )) {
+            //   await launchUrl(
+            //     url,
+            //     mode: LaunchMode.platformDefault,
+            //   );
+            // } else {
+            //   print('cant');
+            // }
+
+            lanzarUrl(context, scanListProvider.scans[index]!);
+          },
         ),
       ),
       itemCount: scanListProvider.scans.length,

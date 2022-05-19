@@ -90,9 +90,9 @@ class DBProvider {
     final db = await database;
     final res = await db.query('Scans', where: 'tipo = ?', whereArgs: [tipo]);
 
-    final res2 = await db.rawQuery('''
-            SELECT * FROM Scans WHERE tipo = '$tipo'
-        ''');
+    // final res2 = await db.rawQuery('''
+    //         SELECT * FROM Scans WHERE tipo = '$tipo'
+    //     ''');
     print(res);
 
     return res.isNotEmpty ? res.map((s) => ScanModel.fromJson(s)).toList() : [];
